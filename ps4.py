@@ -20,46 +20,33 @@ random.seed(120)
 ####################
 
 
-'''
-A Las Vegas Algorithm to find a key-value pair (Ij, Kj) such that Kj is an i’th smallest key.
-arr: a list of key-value pair tuples
-    e.g. [(K0, V0), (K1, V1), ..., (Ki, Vi), ..., (Kn, Vn)] 
-    ... in this problem set, the values are irrelevant
-i: an integer [0, n-1] 
-returns: An key-value pair (Kj, Vj) such that Kj is an i’th smallest key.
-'''
-
-
 def QuickSelect(arr, i):
     n = len(arr)
-    if n <= 1:
+    if n <= 1: 
         return arr[0]
-    else:
-        key_p, val_p = arr[get_random_index(arr)]
-        big_p = key_p
-        arr_less = []
-        arr_eq = []
-        arr_more = []
-        for j in range(n):
-            key_i, val_i = arr[j]
-            if key_i < big_p:
-                arr_less.append(arr[j])
-            elif key_i == big_p:
-                arr_eq.append(arr[j])
-            else:
-                arr_more.append(arr[j])
-        n_less = len(arr_less)
-        n_eq = len(arr_eq)
-        n_more = len(arr_more)
-        if i < n_less:
-            return QuickSelect(arr_less, i)
-        elif i >= (n_less + n_eq):
-            return QuickSelect(arr_more, (i - n_less - n_eq))
-        else:
-            return arr_eq[0]
+    p = get_random_index(arr)
+    pivot, val = arr[p]
 
-    # Feel free to use get_random_index(arr) or get_random_int(start_inclusive, end_inclusive)
-    # ... see the helper functions below
+    a_less = []
+    a_eq = []
+    a_more = []
+    for pair in arr: 
+        k = pair[0]
+        if k < pivot: 
+            a_less.append(pair)
+        elif k > pivot: 
+            a_more.append(pair)
+        else:
+            a_eq.append(pair)
+    n_less = len(a_less)
+    n_eq = len(a_eq)
+    n_more = len(a_more)
+    if i < n_less: 
+        return QuickSelect(a_less, i)
+    elif i >= n_less + n_eq:
+        return QuickSelect(a_more, i-n_less-n_eq)
+    else:
+        return a_eq[0]
 
 
 '''
@@ -77,8 +64,11 @@ NOTE: This is different from the QuickSelect definition. This function takes in 
 def MergeSortSelect(arr, query_list):
     # Only call MergeSort once
     # ... MergeSort has already been implemented for you (see below)
-    pass
-    return [(0, -1)] * len(query_list)  # replace this line with your return
+    sorted = MergeSort(arr)
+    out = [] 
+    for query in query_list:
+        out.append(sorted[query])
+    return out
 
 
 ##################################
@@ -90,11 +80,14 @@ def MergeSortSelect(arr, query_list):
 
 def experiments():
     # Edit this parameter
-    k = [1, 1, 1, 1, 1]
+    # k = [20, 25, 30, 35, 40]
+    # k = [30,38,46,54,62,70]
+    # k = [38,40,42,44,46]
+    k = [46,48,50,52,54,56]
 
     # Feel free to edit these initial parameters
 
-    RUNS = 20  # Number of runs for each trial; more runs means better distributions approximation but longer experiment
+    RUNS = 240  # Number of runs for each trial; more runs means better distributions approximation but longer experiment
     HEIGHT = 1.5  # Height of a chart
     WIDTH = 3   # Width of a chart
     # Determines if subcharts share the same axis scale/limits
