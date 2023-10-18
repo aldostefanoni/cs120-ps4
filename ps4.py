@@ -20,12 +20,48 @@ random.seed(120)
 ####################
 
 
-def QuickSelect(arr, i):
+def QuickSelectOld(arr, i):
     n = len(arr)
     if n <= 1: 
         return arr[0]
     p = get_random_index(arr)
     pivot, val = arr[p]
+
+    a_less = []
+    a_eq = []
+    a_more = []
+    for pair in arr: 
+        k = pair[0]
+        if k < pivot: 
+            a_less.append(pair)
+        elif k > pivot: 
+            a_more.append(pair)
+        else:
+            a_eq.append(pair)
+    n_less = len(a_less)
+    n_eq = len(a_eq)
+    n_more = len(a_more)
+    if i < n_less: 
+        return QuickSelect(a_less, i)
+    elif i >= n_less + n_eq:
+        return QuickSelect(a_more, i-n_less-n_eq)
+    else:
+        return a_eq[0]
+    
+ 
+def QuickSelect(arr, i):
+    n = len(arr)
+    if n <= 1: 
+        return arr[0]
+    pivots = []
+    p1 = get_random_index(arr)
+    p2 = get_random_index(arr)
+    p3 = get_random_index(arr)
+    pivots.append(arr[p1][0])
+    pivots.append(arr[p2][0])
+    pivots.append(arr[p3][0])
+    pivots.sort()
+    pivot = pivots[1]
 
     a_less = []
     a_eq = []
@@ -80,14 +116,14 @@ def MergeSortSelect(arr, query_list):
 
 def experiments():
     # Edit this parameter
-    # k = [20, 25, 30, 35, 40]
+    k = [20, 25, 30, 35, 40]
     # k = [30,38,46,54,62,70]
     # k = [38,40,42,44,46]
-    k = [46,48,50,52,54,56]
+    # k = [46,48,50,52,54,56]
 
     # Feel free to edit these initial parameters
 
-    RUNS = 240  # Number of runs for each trial; more runs means better distributions approximation but longer experiment
+    RUNS = 60  # Number of runs for each trial; more runs means better distributions approximation but longer experiment
     HEIGHT = 1.5  # Height of a chart
     WIDTH = 3   # Width of a chart
     # Determines if subcharts share the same axis scale/limits
