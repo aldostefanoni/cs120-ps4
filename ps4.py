@@ -20,7 +20,7 @@ random.seed(120)
 ####################
 
 
-def QuickSelectOld(arr, i):
+def QuickSelect(arr, i):
     n = len(arr)
     if n <= 1: 
         return arr[0]
@@ -49,7 +49,7 @@ def QuickSelectOld(arr, i):
         return a_eq[0]
     
  
-def QuickSelect(arr, i):
+def QuickSelect3Median(arr, i):
     n = len(arr)
     if n <= 1: 
         return arr[0]
@@ -116,14 +116,18 @@ def MergeSortSelect(arr, query_list):
 
 def experiments():
     # Edit this parameter
-    k = [20, 25, 30, 35, 40]
+    # k = [20, 25, 30, 35, 40]
     # k = [30,38,46,54,62,70]
-    # k = [38,40,42,44,46]
+    # k = [30,32,34,36,38,40]
+
+    # k = [38,40,42,44,46,48]
+    k = [48,50,52,54,56,58]
+
     # k = [46,48,50,52,54,56]
 
     # Feel free to edit these initial parameters
 
-    RUNS = 60  # Number of runs for each trial; more runs means better distributions approximation but longer experiment
+    RUNS = 240  # Number of runs for each trial; more runs means better distributions approximation but longer experiment
     HEIGHT = 1.5  # Height of a chart
     WIDTH = 3   # Width of a chart
     # Determines if subcharts share the same axis scale/limits
